@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#73b8e6">
+  <meta name="description" content="Minecraft Rell X1000 - Vertex Games">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <title>Minecraft Rell X1000 | Vertex Games</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="security.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js" defer></script>
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <div id="game">
+    <canvas id="world"></canvas>
+
+    <header class="hud-top">
+      <div class="brand">
+        <strong>Minecraft Rell X1000</strong>
+        <span>Vertex Games • JavaScript 3D</span>
+      </div>
+      <div class="stats">
+        <span>🌍 <b id="coords">0, 0, 0</b></span>
+        <span>☀️ <b id="dayState">نهار</b></span>
+      </div>
+    </header>
+
+    <div id="crosshair">+</div>
+
+    <div id="startScreen" class="start-screen">
+      <div class="start-card">
+        <div class="logo-cube">X1000</div>
+        <h1>Minecraft Rell X1000</h1>
+        <p>النسخة الأولى: عالم بلوكات 3D، مشي وقفز، أشجار، تكسير وبناء، وتعاقب ليل ونهار.</p>
+        <button id="startBtn">ابدأ العالم</button>
+        <small>WASD للحركة • Space للقفز • كلك يسار للتكسير • كلك يمين للبناء • 1–6 لتغيير البلوك</small>
+      </div>
+    </div>
+
+    <div id="hint" class="hint">اضغط داخل اللعبة لتثبيت الماوس</div>
+
+    <div class="hotbar" id="hotbar">
+      <button data-block="grass" class="selected"><span class="cube grass"></span><b>1</b><small>عشب</small></button>
+      <button data-block="dirt"><span class="cube dirt"></span><b>2</b><small>تراب</small></button>
+      <button data-block="stone"><span class="cube stone"></span><b>3</b><small>حجر</small></button>
+      <button data-block="wood"><span class="cube wood"></span><b>4</b><small>خشب</small></button>
+      <button data-block="leaves"><span class="cube leaves"></span><b>5</b><small>أوراق</small></button>
+      <button data-block="sand"><span class="cube sand"></span><b>6</b><small>رمل</small></button>
+    </div>
+
+    <div class="controls-note">ESC لفك الماوس • R للرجوع لنقطة البداية</div>
+  </div>
+</body>
+</html>
