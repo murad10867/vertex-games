@@ -246,7 +246,9 @@
     for (const [px, pz] of points) {
       const gx = Math.round(px);
       const gz = Math.round(pz);
-      for (let y = Math.floor(footY); y <= Math.floor(footY + 1.55); y++) {
+      const minBlockY = Math.floor(footY + 0.51);
+      const maxBlockY = Math.floor(footY + 1.74 + 0.5);
+      for (let y = minBlockY; y <= maxBlockY; y++) {
         if (blockMap.has(keyFor(gx, y, gz))) return true;
       }
     }
