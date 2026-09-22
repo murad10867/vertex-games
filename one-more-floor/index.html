@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#090b14">
+  <meta name="description" content="ONE MORE FLOOR - تحديات سريعة داخل برج لا ينتهي">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <title>ONE MORE FLOOR | Vertex Games</title>
+  <link rel="stylesheet" href="style.css?v=1">
+  <script src="security.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js" defer></script>
+  <script src="game.js?v=1" defer></script>
+</head>
+<body>
+  <div id="game">
+    <canvas id="world"></canvas>
+
+    <header class="hud">
+      <div class="brand">
+        <strong>ONE MORE FLOOR</strong>
+        <small>Vertex Games</small>
+      </div>
+
+      <div class="stats">
+        <div><span>الدور</span><b id="floorValue">1</b></div>
+        <div><span>الوقت</span><b id="timeValue">20</b></div>
+        <div><span>الأفضل</span><b id="bestValue">0</b></div>
+      </div>
+    </header>
+
+    <div id="challengeLabel" class="challenge-label">⚡ تحدي الدور</div>
+    <div id="message" class="message"></div>
+
+    <div id="overlay" class="overlay show">
+      <div class="card">
+        <div class="tower">🏢</div>
+        <p class="eyebrow">JUST ONE MORE...</p>
+        <h1>ONE MORE FLOOR</h1>
+        <p id="overlayText">كل دور أصعب من اللي قبله. وصل للباب قبل انتهاء الوقت.</p>
+        <button id="startBtn">ابدأ التحدي</button>
+        <small>WASD أو الأسهم للحركة • Space للقفز</small>
+      </div>
+    </div>
+
+    <div class="mobile">
+      <button data-key="ArrowUp">↑</button>
+      <div>
+        <button data-key="ArrowLeft">←</button>
+        <button data-key="Space" class="jump">⤒</button>
+        <button data-key="ArrowRight">→</button>
+      </div>
+      <button data-key="ArrowDown">↓</button>
+    </div>
+
+    <div class="share-row">
+      <button id="shareBtn">شارك نتيجتك</button>
+    </div>
+  </div>
+</body>
+</html>
