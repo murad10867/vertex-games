@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Vertex Puzzle Rooms - لعبة ألغاز حركة ومنطق بدون أسئلة وأجوبة">
+  <title>Vertex Puzzle Rooms | Vertex Games</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="security.js" defer></script>
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <strong>🧩 Vertex Puzzle Rooms</strong>
+      <small>ألغاز حركة ومنطق — بدون أسئلة وأجوبة</small>
+    </div>
+    <button id="restartBtn">إعادة المرحلة</button>
+  </header>
+
+  <main>
+    <section class="info">
+      <div><span>المرحلة</span><b id="levelValue">1 / 5</b></div>
+      <div><span>الحركات</span><b id="movesValue">0</b></div>
+      <div><span>الأفضل</span><b id="bestValue">—</b></div>
+    </section>
+
+    <section class="game-card">
+      <canvas id="gameCanvas" width="760" height="620"></canvas>
+      <div id="overlay" class="overlay show">
+        <div>
+          <div class="icon">🧩</div>
+          <h1>Vertex Puzzle Rooms</h1>
+          <p id="overlayText">حرّك الصناديق فوق البلاطات المضيئة وافتح الباب. كل مرحلة أصعب.</p>
+          <button id="startBtn">ابدأ</button>
+          <small>WASD أو الأسهم للحركة — R لإعادة المرحلة</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="mobile">
+      <button data-key="ArrowUp">↑</button>
+      <div>
+        <button data-key="ArrowLeft">←</button>
+        <button data-key="ArrowDown">↓</button>
+        <button data-key="ArrowRight">→</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>Vertex Games © 2026</footer>
+</body>
+</html>
