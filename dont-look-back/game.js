@@ -363,7 +363,7 @@
     const p=cellToWorld(spawnCell.x,spawnCell.y);
     player.x=p.x;
     player.z=p.z;
-    yaw=Math.PI;
+    yaw=0;
     pitch=0;
 
     resetMonster();
@@ -436,9 +436,9 @@
   }
 
   function updatePlayer(dt){
-    const forward=(keys.w||keys.ArrowUp?1:0)-(keys.s||keys.ArrowDown?1:0);
-    const strafe=(keys.d||keys.ArrowRight?1:0)-(keys.a||keys.ArrowLeft?1:0);
-    const sprint=keys.Shift;
+    const forward=(keys.KeyW||keys.w||keys['ص']||keys.ArrowUp?1:0)-(keys.KeyS||keys.s||keys['س']||keys.ArrowDown?1:0);
+    const strafe=(keys.KeyD||keys.d||keys['ي']||keys.ArrowRight?1:0)-(keys.KeyA||keys.a||keys['ش']||keys.ArrowLeft?1:0);
+    const sprint=keys.ShiftLeft||keys.ShiftRight||keys.Shift;
     const speed=sprint?5.2:3.35;
 
     if(forward||strafe){
@@ -593,13 +593,15 @@
     const k=e.key.toLowerCase();
 
     if(['arrowup','arrowdown','arrowleft','arrowright'].includes(k)) e.preventDefault();
-    if(k==='f'&&!e.repeat) toggleFlash();
+    if((e.code==='KeyF'||k==='f'||k==='ب')&&!e.repeat) toggleFlash();
 
+    keys[e.code]=true;
     keys[e.key]=true;
     keys[k]=true;
   },{passive:false});
 
   document.addEventListener('keyup',e=>{
+    keys[e.code]=false;
     keys[e.key]=false;
     keys[e.key.toLowerCase()]=false;
   });
