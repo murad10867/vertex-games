@@ -363,7 +363,7 @@
     const p=cellToWorld(spawnCell.x,spawnCell.y);
     player.x=p.x;
     player.z=p.z;
-    yaw=0;
+    yaw=Math.PI;
     pitch=0;
 
     resetMonster();
@@ -448,8 +448,8 @@
       const sin=Math.sin(yaw);
       const cos=Math.cos(yaw);
 
-      const dx=(sin*f+cos*s)*speed*dt;
-      const dz=(cos*f-sin*s)*speed*dt;
+      const dx=(-sin*f+cos*s)*speed*dt;
+      const dz=(-cos*f-sin*s)*speed*dt;
       tryMove(player.x+dx,player.z+dz);
     }
 
