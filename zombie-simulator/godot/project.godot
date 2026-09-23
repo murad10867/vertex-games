@@ -1,7 +1,7 @@
 [application]
 
 config/name="Zombie Simulator"
-run/main_scene="res://scenes/zombie_preview.tscn"
+run/main_scene="res://scenes/gameplay.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [display]
