@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/zombie_ai.gd" id="1"]
+
+[sub_resource type="CapsuleShape3D" id="BodyCollision"]
+radius = 0.42
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="Skin"]
+albedo_color = Color(0.28, 0.42, 0.23, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Clothes"]
+albedo_color = Color(0.12, 0.15, 0.12, 1)
+roughness = 0.98
+
+[sub_resource type="CapsuleMesh" id="BodyMesh"]
+material = SubResource("Clothes")
+radius = 0.38
+height = 1.15
+
+[sub_resource type="SphereMesh" id="HeadMesh"]
+material = SubResource("Skin")
+radius = 0.32
+height = 0.64
+
+[sub_resource type="BoxMesh" id="ArmMesh"]
+material = SubResource("Skin")
+size = Vector3(0.22, 0.22, 0.82)
+
+[sub_resource type="BoxMesh" id="LegMesh"]
+material = SubResource("Clothes")
+size = Vector3(0.26, 0.78, 0.28)
+
+[node name="ZombieEnemy" type="CharacterBody3D"]
+script = ExtResource("1")
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("BodyCollision")
+
+[node name="ModelRoot" type="Node3D" parent="."]
+position = Vector3(0, 0, 0)
+
+[node name="Fallback" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Fallback"]
+position = Vector3(0, 1.05, 0)
+mesh = SubResource("BodyMesh")
+
+[node name="Head" type="MeshInstance3D" parent="Fallback"]
+position = Vector3(0, 1.92, -0.03)
+mesh = SubResource("HeadMesh")
+
+[node name="ArmL" type="MeshInstance3D" parent="Fallback"]
+position = Vector3(0.48, 1.25, -0.25)
+rotation_degrees = Vector3(50, 0, -12)
+mesh = SubResource("ArmMesh")
+
+[node name="ArmR" type="MeshInstance3D" parent="Fallback"]
+position = Vector3(-0.48, 1.25, -0.25)
+rotation_degrees = Vector3(50, 0, 12)
+mesh = SubResource("ArmMesh")
+
+[node name="LegL" type="MeshInstance3D" parent="Fallback"]
+position = Vector3(0.20, 0.43, 0)
+mesh = SubResource("LegMesh")
+
+[node name="LegR" type="MeshInstance3D" parent="Fallback"]
+position = Vector3(-0.20, 0.43, 0)
+mesh = SubResource("LegMesh")
