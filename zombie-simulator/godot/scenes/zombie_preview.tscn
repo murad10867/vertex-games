@@ -35,3 +35,15 @@ position = Vector3(0, -0.08, 0)
 mesh = SubResource("GroundMesh")
 
 [node name="ZombieSpawn" type="Node3D" parent="."]
+
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="AnimationLabel" type="Label" parent="HUD"]
+offset_left = 22.0
+offset_top = 20.0
+offset_right = 570.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0.84, 0.94, 0.84, 1)
+theme_override_font_sizes/font_size = 20
+text = "بانتظار موديل الزومبي — 1 Idle | 2 Walk | 3 Attack"
