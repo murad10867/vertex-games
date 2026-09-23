@@ -218,6 +218,113 @@ arm.pose.bones["upper_arm.R"].rotation_euler[1] = math.radians(13)
 bpy.ops.object.mode_set(mode='OBJECT')
 
 # -------------------------------------------------
+# Animations: Idle / Walk / Attack
+# -------------------------------------------------
+def reset_pose():
+    for pb in arm.pose.bones:
+        pb.rotation_mode = 'XYZ'
+        pb.rotation_euler = (0.0, 0.0, 0.0)
+        pb.location = (0.0, 0.0, 0.0)
+
+
+def key_bone(bone_name, frame, rot=(0,0,0), loc=(0,0,0)):
+    pb = arm.pose.bones[bone_name]
+    pb.rotation_mode = 'XYZ'
+    pb.rotation_euler = tuple(math.radians(v) for v in rot)
+    pb.location = loc
+    pb.keyframe_insert(data_path="rotation_euler", frame=frame)
+    pb.keyframe_insert(data_path="location", frame=frame)
+
+
+def create_action(name, frame_start, frame_end):
+    action = bpy.data.actions.new(name=name)
+    action.use_fake_user = True
+
+    if arm.animation_data is None:
+        arm.animation_data_create()
+
+    arm.animation_data.action = action
+    reset_pose()
+    bpy.context.scene.frame_start = frame_start
+    bpy.context.scene.frame_end = frame_end
+    return action
+
+
+# IDLE: slow breathing + slight head sway
+idle = create_action("Idle", 1, 60)
+
+for f, breath, head_z in [
+    (1, 0.00, -5),
+    (15, 0.03, -2),
+    (30, 0.05, 3),
+    (45, 0.02, 0),
+    (60, 0.00, -5),
+]:
+    key_bone("hips", f, rot=(0,0,0), loc=(0,0,breath))
+    key_bone("spine", f, rot=(12 + breath*55, 0, 0))
+    key_bone("head", f, rot=(2, 0, head_z))
+    key_bone("upper_arm.L", f, rot=(0, -8, -5 + breath*30))
+    key_bone("upper_arm.R", f, rot=(0, 13, 5 - breath*30))
+
+# WALK: uneven zombie limp
+walk = create_action("Walk", 1, 36)
+
+walk_keys = [
+    (1,   18, -12, -24, 18,  28, -20,  9),
+    (10,  -6,  22,  14, -28, -20,  26, -6),
+    (19, -20,  12,  25, -18, -28,  20, -9),
+    (28,   8, -22, -12,  27,  22, -25,  7),
+    (36,  18, -12, -24, 18,  28, -20,  9),
+]
+
+for f, leg_l, leg_r, shin_l, shin_r, arm_l, arm_r, lean in walk_keys:
+    bob = 0.035 if f in (10, 28) else 0.0
+    key_bone("hips", f, rot=(0,0,lean*0.15), loc=(0,0,bob))
+    key_bone("spine", f, rot=(14, 0, lean))
+    key_bone("head", f, rot=(-3, 0, -lean*0.55))
+    key_bone("upper_leg.L", f, rot=(leg_l,0,0))
+    key_bone("upper_leg.R", f, rot=(leg_r,0,0))
+    key_bone("lower_leg.L", f, rot=(shin_l,0,0))
+    key_bone("lower_leg.R", f, rot=(shin_r,0,0))
+    key_bone("upper_arm.L", f, rot=(arm_l,-5,-8))
+    key_bone("upper_arm.R", f, rot=(arm_r,10,8))
+    key_bone("lower_arm.L", f, rot=(-18,0,-10))
+    key_bone("lower_arm.R", f, rot=(-20,0,10))
+
+# ATTACK: both arms lunge forward, then recoil
+attack = create_action("Attack", 1, 32)
+
+attack_poses = [
+    (1,  14,  18,  12, -8,  10, -10, 0.00),
+    (8,  24,  48,  44, -35, -40,  38, 0.04),
+    (14, 34,  78,  76, -62, -68,  62, 0.10),
+    (20, 30,  64,  62, -50, -54,  50, 0.06),
+    (26, 20,  30,  26, -20, -18,  18, 0.02),
+    (32, 14,  18,  12,  -8,  10, -10, 0.00),
+]
+
+for f, spine_x, arm_l_x, arm_r_x, fore_l_x, fore_r_x, head_x, push in attack_poses:
+    key_bone("hips", f, rot=(0,0,0), loc=(0,-push,0))
+    key_bone("spine", f, rot=(spine_x,0,0))
+    key_bone("head", f, rot=(head_x,0,-5))
+    key_bone("upper_arm.L", f, rot=(arm_l_x,-12,-18))
+    key_bone("upper_arm.R", f, rot=(arm_r_x,12,18))
+    key_bone("lower_arm.L", f, rot=(fore_l_x,0,-6))
+    key_bone("lower_arm.R", f, rot=(fore_r_x,0,6))
+
+# Make interpolation more organic while keeping the low-poly feel.
+for action in (idle, walk, attack):
+    for fc in action.fcurves:
+        for kp in fc.keyframe_points:
+            kp.interpolation = 'BEZIER'
+
+# Put Idle back as the active preview animation.
+arm.animation_data.action = idle
+bpy.context.scene.frame_start = 1
+bpy.context.scene.frame_end = 60
+bpy.context.scene.frame_set(1)
+
+# -------------------------------------------------
 # Set origin-friendly scale for Godot (roughly 1.8m tall)
 # -------------------------------------------------
 group_objects = [arm] + [o for o,_ in parts]
